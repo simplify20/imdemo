@@ -98,22 +98,23 @@ public class WaveLoadingView extends View {
 //        }
         if (offset == 0)
             offset = (T + mPadding * 2) / 2;//default
-        setMeasuredDimension((int) T + mPadding * 2,(int) T + mPadding * 2);
+        setMeasuredDimension((int) T + mPadding * 2, (int) T + mPadding * 2);
 
     }
 
     private void init(Context context, AttributeSet attrs) {
+        Resources resources = getResources();
         mWavePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mWavePaint.setStrokeCap(Paint.Cap.ROUND);
         mWavePaint.setStrokeJoin(Paint.Join.ROUND);
-        mWavePaint.setColor(Color.BLUE);
+        mWavePaint.setColor(resources.getColor(R.color.color_water_light_blue));
         mWavePaint.setStyle(Paint.Style.FILL);
         mWavePaint.setStrokeWidth(4);
 
         mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCirclePaint.setStrokeCap(Paint.Cap.ROUND);
         mCirclePaint.setStrokeJoin(Paint.Join.ROUND);
-        mCirclePaint.setColor(Color.BLACK);
+        mCirclePaint.setColor(resources.getColor(R.color.color_water_light_blue));
         mCirclePaint.setStyle(Paint.Style.STROKE);
         mCirclePaint.setStrokeWidth(4);
 
@@ -125,10 +126,9 @@ public class WaveLoadingView extends View {
 
         foregroundWavePath2 = new Path();
 
-        Resources resources = getResources();
         T = resources.getDimensionPixelSize(R.dimen.wave_period);
         radius = T / 2;
-        A = resources.getDimensionPixelSize(R.dimen.wave_peek);
+        A = radius / 3;
         mPadding = resources.getDimensionPixelSize(R.dimen.wave_loading_padding);
     }
 
