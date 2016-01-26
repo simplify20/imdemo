@@ -3,7 +3,6 @@ package com.example.creact.imdemo.app.widget;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
@@ -33,12 +32,13 @@ public class WaveLoadingView2 extends View {
     private SparseArray<PointF> points;
 
 
+    private float waveLength;
     private float T;
     private float A;
     private double w;
 
     private float offset;
-    private float vx = 1.5f;
+    private float vx = -2.0f;
     private float radius;
 
     private int mProgress;
@@ -71,7 +71,7 @@ public class WaveLoadingView2 extends View {
     }
 
     public void setPhase(int angle) {
-        this.phase = -angle * Math.PI / 180;
+        this.phase = angle * Math.PI / 180;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class WaveLoadingView2 extends View {
         int suggestHeight = MeasureSpec.getSize(heightMeasureSpec);
         int size = Math.min(suggestHeight, suggestWidth);
         radius = size / 2;
-        T = 3 * radius;
+        waveLength = 4 * radius;
         A = radius / 3;
         setMeasuredDimension((int) (radius * 2 + A * 2), (int) (radius * 2 + A * 2));
         centerX = getMeasuredWidth() / 2;
@@ -103,7 +103,7 @@ public class WaveLoadingView2 extends View {
 
     private float t = 0;
     private PointF lastPoint = null;
-    private double phase = -30 * Math.PI / 180;
+    private double phase = 30 * Math.PI / 180;
     private boolean hasCircleInitial = false;
 
     @Override
@@ -126,8 +126,9 @@ public class WaveLoadingView2 extends View {
     }
 
     private void initCirclePath() {
+        T = Math.abs(waveLength / vx);
         w = 2 * Math.PI / T;
-        sampleCount = (int) (T / SAMPLE_RATE);
+        sampleCount = (int) (waveLength / SAMPLE_RATE);
         if (points != null) {
             points.clear();
         } else
@@ -184,8 +185,8 @@ public class WaveLoadingView2 extends View {
         cosWavePath = new Path();
 
 
-        T = resources.getDimensionPixelSize(R.dimen.wave_period);
-        radius = T / 3;
+        waveLength = resources.getDimensionPixelSize(R.dimen.wave_period);
+        radius = waveLength / 3;
         A = radius / 3;
 
     }
